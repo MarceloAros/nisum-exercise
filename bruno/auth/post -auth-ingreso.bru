@@ -1,0 +1,18 @@
+meta {
+  name: post -auth-ingreso
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:8080/api/v1/auth/ingreso
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "fulgencio@dominio.cl",
+    "password": "123456"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Marcelo Aros - Nisum Exercise",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

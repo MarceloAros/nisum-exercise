@@ -1,0 +1,10 @@
+java/cl/marceloaros/nisumexercise/ApiUtil.java
+java/cl/marceloaros/nisumexercise/AuthApi.java
+java/cl/marceloaros/nisumexercise/UsersApi.java
+java/cl/marceloaros/nisumexercise/model/ApiErrorResponse.java
+java/cl/marceloaros/nisumexercise/model/ApiGetUserByEmailResponse.java
+java/cl/marceloaros/nisumexercise/model/ApiSignInRequest.java
+java/cl/marceloaros/nisumexercise/model/ApiSignInResponse.java
+java/cl/marceloaros/nisumexercise/model/ApiSignUpRequest.java
+java/cl/marceloaros/nisumexercise/model/ApiSignUpRequestPhonesInner.java
+java/cl/marceloaros/nisumexercise/model/ApiSignUpResponse.java

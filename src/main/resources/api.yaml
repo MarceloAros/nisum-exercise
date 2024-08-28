@@ -1,0 +1,228 @@
+openapi: "3.0.0"
+
+info:
+  version: 1.0.0
+  title: Marcelo Aros - Nisum Exercise
+
+servers:
+  - url: /api/v1
+
+tags:
+  - name: auth
+    description: Operations about authentication
+  - name: users
+    description: Operations about users
+
+paths:
+  /auth/registro:
+    post:
+      summary: Register a new user
+      operationId: UserSignUp
+      tags:
+        - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+        required: true
+      responses:
+        '201':
+          description: Successfully registered user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignUpResponse'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '405':
+          description: Invalid input
+        '409':
+          description: El correo ya registrado
+  /auth/ingreso:
+    post:
+      summary: User login
+      operationId: userSignIn
+      tags:
+        - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequest'
+        required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignInResponse'
+
+  /users/{userEmail}:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Find an user by email
+      operationId: GetUserByEmail
+      parameters:
+        - name: userEmail
+          in: path
+          description: "email of user to return"
+          required: true
+          schema:
+            type: string
+      tags:
+        - users
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserByEmailResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found user with email userEmail provided
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    SignUpRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          example: 'Fulgencio Rutherford'
+        email:
+          type: string
+          format: email
+          # pattern: '[A-Za-z0-9\.\-\_]+(@dominio.cl)'
+          example: 'aaaaaaa@dominio.cl'
+        password:
+          type: string
+          format: password
+          example: 'mypasswordishunter2'
+        phones:
+          type: array
+          items:
+            type: object
+            properties:
+              number:
+                type: string
+                example: '1234567'
+              citycode:
+                type: string
+                example: '1'
+              contrycode:
+                type: string
+                example: '57'
+    SignUpResponse:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+          example: '2f89c0a7-78ba-4567-9e85-58dd650fff1f'
+        created:
+          type: string
+          format: date-time
+          example: '2017-07-21T17:32:28Z'
+        modified:
+          type: string
+          format: date-time
+          example: '2017-07-21T17:32:28Z'
+        last_login:
+          type: string
+          format: date-time
+          example: '2017-07-21T17:32:28Z'
+        token:
+          type: string
+          format: JWT
+          example: 'header.payload.signature'
+        isactive: # ¿Un typo? correcto sería is_active
+          type: boolean
+          example: true
+    SignInRequest:
+      type: object
+      required:
+        - userEmail
+        - userPassword
+      properties:
+        email:
+          type: string
+          format: email
+          pattern: '[A-Za-z0-9\.\-\_]+(@dominio.cl)'
+          example: 'aaaaaaa@dominio.cl'
+        password:
+          type: string
+          format: password
+          example: 'mypasswordishunter2'
+    SignInResponse:
+      type: object
+      required:
+        - name
+        - token
+      properties:
+        name:
+          type: string
+          example: 'Fulgencio Rutherford'
+        token:
+          type: string
+          format: JWT
+          example: 'header.payload.signature'
+
+    GetUserByEmailResponse:
+      properties:
+        name:
+          type: string
+          example: 'Fulgencio Rutherford'
+        email:
+          type: string
+          example: 'aaaaaaa@dominio.cl'
+        phones:
+          type: array
+          items:
+            type: object
+            properties:
+              number:
+                type: string
+                example: '1234567'
+              citycode:
+                type: string
+                example: '1'
+              contrycode:
+                type: string
+                example: '57'
+
+    ErrorResponse:
+      type: object
+      required:
+        - mensaje
+      properties:
+        mensaje:
+          type: string
+          example: "mensaje de error"

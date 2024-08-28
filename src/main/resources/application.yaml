@@ -1,0 +1,25 @@
+server:
+  servlet:
+    context-path: "/api/v1"
+spring:
+  application:
+    name: nisum-exercise
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:nisum-excercise
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  security:
+    jwt:
+      isser: "nisum-exercise"
+      keys:
+        private: "3b1cd32a2f386530f8e1a9bd609991ef44f9e19fb14f4af7a04bd884aacea9bbbf54ce583a73741d0fce441174957fd4c8aeb6994fa72fcfb195c7005624c513"
+
+email-regex-allowed: "[A-Za-z0-9\\.\\-\\_]+(@dominio.cl)"

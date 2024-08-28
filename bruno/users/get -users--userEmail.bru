@@ -1,0 +1,16 @@
+meta {
+  name: get -users--userEmail
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/api/v1/users/fulgencio@dominio.cl
+  body: none
+  auth: basic
+}
+
+auth:basic {
+  username: fulgencio@dominio.cl
+  password: 123456
+}
